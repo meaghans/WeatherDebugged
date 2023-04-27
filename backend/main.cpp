@@ -87,13 +87,11 @@ int main(int argc, char* argv[]) {
 void quickSort(vector<City>& cities, int first, int last) {
     if (first < last) {
         int pivotIndex = partition(cities, first, last);
-        quickSort(cities, first, pivotIndex);
+        quickSort(cities, first, pivotIndex - 1);
         quickSort(cities, pivotIndex + 1, last);
     }
 }
 
-// has a fatal bug where duplicate values get the program caught in an infinite loop
-// current workaround is to delete duplicate values before calling quicksort altogether
 int partition(vector<City>& cities, int first, int last) {
     int pivot = first;
     int up = first;
@@ -101,8 +99,11 @@ int partition(vector<City>& cities, int first, int last) {
     while (up < down) {
         while (cities[up].rank < cities[pivot].rank) up++;
         while (cities[down].rank > cities[pivot].rank) down--;
-        if (cities[up].rank > cities[down].rank) {
+        if (cities[up].rank > cities[down].rank && up < down) {
             swap(cities[up], cities[down]);
+        }
+        if (cities[up].rank == cities[down].rank && up < down) { // prevent infinite loop caused by duplicates
+            up++;
         }
     }
     swap(cities[pivot], cities[down]);
@@ -370,8 +371,7 @@ double sort(vector<City>& cities, vector<int>& input) {
     sorts[1] = radixSort;
 
     setRanks(cities, input);
-    if (input[0] == 0) removeDuplicates(cities); // remove duplicates to avoid quicksort bug
-
+    
     chrono::time_point<chrono::system_clock> start, end;
     start = chrono::system_clock::now();
 
