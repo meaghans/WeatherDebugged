@@ -53,13 +53,14 @@ let resultsPerPage = 3;
 $(document).ready(function() {
       //Retrieving data
       let data = $("extraneous").text();
+      console.log(data)
       $("extraneous").remove();
 
       //Initializing page
       readData(data);
       initializeMapMarkers();
       pageSwap(1);
-
+      
       //Viewing different pages of results
       $(".goTo").click(function() {
             let pageNumber = parseInt($("#pageNumber").val());
@@ -67,7 +68,7 @@ $(document).ready(function() {
             //Page # invalid -> return
             if (isNaN(pageNumber) || pageNumber < 0 || pageNumber > numberPages)
                   return;
-
+            
             pageSwap(pageNumber);
       });
 })
@@ -76,7 +77,7 @@ function readData(data) {
       lines = data.split("\n");
 
       //Sort and time taken
-      sort = lines[1]
+      sort = lines[1].charAt(0).toUpperCase() + lines[1].substr(1).toLowerCase();
       timeTaken = lines[2];
       $("span.timing").text(sort+" sort took "+timeTaken+"ms")
 
@@ -86,20 +87,22 @@ function readData(data) {
       lines.shift();
       lines.pop();
 
+      lines = cleanData(lines);
+
       //Reading in cities, each city has 12 data points
       for (let index = 0; index < lines.length; index+=12) {
-            cities.push(new City(lines[index],
-                lines[index+1],
-                lines[index+2],
-                lines[index+3],
-                lines[index+4],
-                lines[index+5],
-                lines[index+6],
-                lines[index+7],
-                lines[index+8],
-                lines[index+9],
-                lines[index+10],
-                lines[index+11]));
+            cities.push(new City(lines[index], 
+                                 lines[index+1], 
+                                 lines[index+2], 
+                                 lines[index+3], 
+                                 lines[index+4], 
+                                 lines[index+5], 
+                                 lines[index+6], 
+                                 lines[index+7], 
+                                 lines[index+8], 
+                                 lines[index+9], 
+                                 lines[index+10], 
+                                 lines[index+11]));
       }
 
       //Initializing variables and text on page
@@ -128,7 +131,7 @@ function display(start, end) {
             infoBox.append(category("Average Rainfall (in)", average(data[MIN_RAIN], data[MAX_RAIN])));
             infoBox.append(category("Average Humidity", average(data[MIN_HUMIDITY], data[MAX_HUMIDITY])));
             infoBox.append(category("Temperature Trend", convertTrend(data[TEMP_TREND])));
-            infoBox.append(category("Climate", data[CLIMATE]));
+            infoBox.append(category("Climate", convertClimate(data[CLIMATE])));
       }
 }
 
@@ -137,9 +140,15 @@ function average(min, max) {
 }
 
 function convertTrend(temperature) {
-      if (temperature > 0)
+      if (temperature > 0) 
             return "Warmer";
       return "Cooler";
+}
+
+function convertClimate(climate) {
+      //The argument climate will be an integer
+      climateValues = ["Tropical", "Mild", "Continental", "Polar", "Dry"];
+      return climateValues[parseInt(climate)]
 }
 
 function element(tag, text) {
@@ -148,6 +157,15 @@ function element(tag, text) {
 
 function category(label, text) {
       return '<p><span class="category">'+label+'</span>'+text+'</p>';
+}
+
+function cleanData(data) {
+      cleanedData = [];
+      for (let i = 0; i < data.length; i++) {
+            if (data[i] != "")
+                  cleanedData.push(data[i]);
+      }
+      return cleanedData;
 }
 
 function pageSwap(pageNumber) {
