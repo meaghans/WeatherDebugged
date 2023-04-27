@@ -1,0 +1,40 @@
+/* 
+This is for the global parts that extend through all pages. 
+*/
+
+*, *::after, *::before {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+}
+
+:root {
+      --spacing: 5px;
+      --blue: #1c5cbc;
+      --black: #46484f;
+      --lightGray: rgb(178, 178, 178);
+      --white: rgb(200, 200, 200)
+}
+
+html {
+      font-size: 100%;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+      background-color: var(--white);
+}
+
+body {
+      overflow-x: hidden;
+      position: relative;
+      width: 100%;
+      background: #eeececbf;
+}
+
+p, span, div, h1, h2, h3, a, ul, button, input[type='text'], input[type='number'] {
+      font-family: 'Open Sans', sans-serif;
+      color: var(--black);
+}
+
+.hidden {
+      display: none;
+}

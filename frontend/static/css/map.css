@@ -1,0 +1,19 @@
+/* 
+This is for map-related items. 
+*/
+
+#map {
+      border: 0px solid blue;
+      display: flex;
+      flex-direction: column;
+      justify-items: center;
+      align-content: center;
+}
+
+yellowMan {
+      background-image: url(../images/seeker.png);
+      height: 48px;
+      width: 20px;
+      background-size: cover;
+      position: absolute;
+}

@@ -1,0 +1,162 @@
+<html>
+    <head>
+        <!-- CSS -->
+        <link rel="stylesheet" href="../static/css/global.css">
+        <link rel="stylesheet" href="../static/css/input.css">
+        <link rel="stylesheet" href="../static/css/main.css">
+        <link rel="stylesheet" href="../static/css/map.css">
+        <link rel="stylesheet" href="../static/css/result.css">
+        <link rel="stylesheet" href="../static/css/search.css">
+
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+        
+        <!-- Scripts + jQuery -->
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+        <script src="../static/scripts/Interaction.js" type="text/javascript"></script>
+        <script src="../static/scripts/FormValidation.js" type="text/javascript"></script>
+
+        <!-- Other -->
+        <title>Climate</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        <nav>
+            <div id="groupName">
+                <span>The System Breakers &#129323</span>
+            </div>
+            <div id="memberNames">
+                <span>Meaghan Estrada</span>
+                <span>Evelyn Meckley</span>
+                <span>Lysandra Belnavis-Walters</span>
+                <div class="top"><button onclick="window.location.href = 'aboutUs.html';" id="about-button">ABOUT US</button></div>
+            </div>
+        </nav>
+        <header>
+            <h1><span>Weather </span>Debugged</h1>
+            <span>Climate change is a horrible consequence of our negligence. Fortunately, you can ignore that minor problem today and find a great location tomorrow!</span>
+        </header>
+        <section id="main">
+            <div id="left">
+                <div id="search">
+                    <div class="title">
+                        <h1>Search</h1>
+                        <span>The System Breakers can help you find the location that suits you best. Start by filling out this form.</span>
+                    </div>
+                    <form id="climateForm" action="/getInformation" method="post">
+                        <div class="inputContainer">
+                            <div class="text">
+                                <div class="label">Temperatures</div>
+                                <div class="desc">Bachelors aren't the only kind of degrees a college student needs to concern themself with—the median temperature of wherever they go after graduation is also important. (Maybe even equally important. Who can say? Certainly not us, your totally unbiased WeatherDebugged team.) Input your preferences for average temperature in degrees Fahrenheit, or leave the fields blank if you don't care about temperature.</div>
+                            </div>
+                            <div class="input">
+                                <div class="buttonContainer">
+                                    <div id="cold" class="preset button">Cold</div>
+                                    <div id="warm" class="preset button">Warm</div>
+                                    <div id="hot" class="preset button">Hot</div>
+                                </div>
+                                <div class="numbersContainer">
+                                    <div class="numberInput">
+                                        <span>Minimum Temperature</span>
+                                        <input name="tempMin" type="text">
+                                    </div>
+                                    <div class="numberInput">
+                                        <span>Maximum Temperature</span>
+                                        <input name="tempMax" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="inputContainer">
+                            <div class="text">
+                                <div class="label">Trending Temperatures</div>
+                                <div class="desc">As anyone who's so much as glanced at climate news recently knows, it's not enough to think about the climate of a place now, you have to also consider the future. In which direction do you want your dream location's temperature to be trending?</div>
+                            </div>
+                            <div class="input">
+                                <div class="buttonContainer trending">
+                                    <div id="warmer" class="button trending">Warmer</div>
+                                    <div id="cooler" class="button trending">Cooler</div>
+                                </div>
+                                <input type="hidden" name="tempTrend">
+                            </div>
+                        </div>
+                        <div class="inputContainer">
+                            <div class="text">
+                                <div class="label">Humidity</div>
+                                <div class="desc">Have you been Stockholm Syndrome'd by muggy Florida? Can you afford the chapstick costs associated with a dry climate? Input your preferences for percent humidity, or leave the fields blank if humidity isn't a concern for you.</div>
+                            </div>
+                            <div class="input">
+                                <div class="buttonContainer">
+                                    <div id="dryer" class="preset button">Dryer</div>
+                                    <div id="moister" class="preset button">Moister</div>
+                                </div>
+                                <div class="numbersContainer">
+                                    <div class="numberInput">
+                                        <span>Relative Minimum</span>
+                                        <input name="humidityMin" type="text">
+                                    </div>
+                                    <div class="numberInput">
+                                        <span>Relative Maximum</span>
+                                        <input name="humidityMax" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="inputContainer">
+                            <div class="text">
+                                <div class="label">Rainfall</div>
+                                <div class="desc">Is it a desert town your heart desires, or a wetland? Input your preferences for average rainfall per year, or leave the fields blank if we should leave rainfall out of our calculations.</div>
+                            </div>
+                            <div class="input">
+                                <div class="buttonContainer">
+                                    <div id="less" class="preset button">Less</div>
+                                    <div id="more" class="preset button">More</div>
+                                </div>
+                                <div class="numbersContainer">
+                                    <div class="numberInput">
+                                        <span>Minimum Inches</span>
+                                        <input name="rainfallMin" type="text">
+                                    </div>
+                                    <div class="numberInput">
+                                        <span>Maximum Inches</span>
+                                        <input name="rainfallMax" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="inputContainer">
+                            <div class="text">
+                                <div class="label">Climate</div>
+                                <div class="desc">There are five main climate varieties on this Earth, all of which are represented (in some capacity) in the US. Which would be your preference? (Hint: if it's polar, try Alaska.)</div>
+                            </div>
+                            <div class="input">
+                                <div class="buttonContainer trending">
+                                    <div id="tropical" class="button trending">Tropical</div>
+                                    <div id="dry" class="button trending">Dry</div>
+                                    <div id="mild" class="button trending">Mild</div>
+                                    <div id="continental" class="button trending">Continental</div>
+                                    <div id="polar" class="button trending">Polar</div>
+                                </div>
+                                <input type="hidden" name="climateType">
+                            </div>
+                        </div>
+                        <div class="inputContainer">
+                            <div class="text">
+                                <div class="label">Sorting Method</div>
+                                <div class="desc">Well, there’s not much to say here. Just pick one (or don’t if you’re feeling sassy) and keep it moving. Your dream location is about to be bought out by a corporation!</div>
+                            </div>
+                            <div class="input">
+                                <div class="buttonContainer trending">
+                                    <div id="radix" class="button trending">Radix</div>
+                                    <div id="quick" class="button trending">Quick</div>
+                                </div>
+                                <input type="hidden" name="sortMethod">
+                            </div>
+                        </div>
+                        <button class="submit buttonContainer">Search</button>
+                    </form>
+                </div>
+            </div>            
+        </section>
+    </body>
+</html>

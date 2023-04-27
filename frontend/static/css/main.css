@@ -1,0 +1,76 @@
+/* 
+This is for the main parts of the page, like the general layout of the page
+and the navigation bar.
+*/
+
+nav {
+      padding: calc(3.5*var(--spacing)) calc(15*var(--spacing));
+      background: #1f1f22;
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+}
+
+nav > div > span {
+      color: #ced0d4;
+}
+
+nav > #groupName {
+      display: flex;
+      flex-direction: column;
+      align-items: normal;
+      justify-content: center;
+      
+}
+
+nav > #groupName > span {
+      font-size: 15px;
+      font-weight:600;
+      color:white!important
+}
+
+nav > #memberNames {
+      display: flex;
+      column-gap: 15px;
+      align-items: center;
+      font-size: 12px;
+      color: #838386 !important;
+}
+
+header {
+      padding: calc(10*var(--spacing)) calc(15*var(--spacing)) 0 calc(15*var(--spacing));
+      background-color: #eeececbf;
+}
+
+header > h1 {
+      color: #1c5cbc;
+      font-size: 36px;
+}
+
+header > h1 > span {
+      color: var(--black);
+}
+
+header > span {
+      font-size: 12px;
+      width: 375px;
+      display: block;
+      color: gray;
+}
+
+#main {
+      padding: calc(5*var(--spacing)) calc(15*var(--spacing));
+      background: #eeececbf;
+      height: fit-content;
+      display: flex; 
+}
+
+#left {
+      width: 50%;
+      border: 0px solid red;
+      padding-right: calc(5*var(--spacing));
+}
+
+#right {
+      width: 50%;
+}
