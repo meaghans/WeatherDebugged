@@ -12,9 +12,11 @@ using namespace std;
 void quickSort(vector<City>& cities, int first, int last);
 int partition(vector<City>& cities, int first, int last);
 void swap(City& x, City& y);
+void removeDuplicates(vector<City>& cities);
 
 void radixSort(vector<City>& cities, int extra1, int extra2);
 void countingSort(vector<City>& cities, vector<int>& buckets, int place);
+int maxNumOfPlaces(vector<City>& cities);
 int getDigit(int num, int place);
 
 void generateData();
@@ -26,23 +28,56 @@ int getMinRain(vector<City>& cities, int i);
 int getMaxRain(vector<City>& cities, int i);
 int getMinHumid(vector<City>& cities, int i);
 int getMaxHumid(vector<City>& cities, int i);
+int getTempTrend(vector<City>& cities, int i);
+int getClimate(vector<City>& cities, int i);
 
 void setRanks(vector<City>& cities, vector<int>& input);
 
 double sort(vector<City>& cities, vector<int>& input);
 
-int main() {
+void filterByCat(vector<City>& cities, int input, int cat);
 
+int main(int argc, char* argv[]) {
     //generateData();
 
-    vector<int> input = {44, 82, 16, 56, 40, 80};
+    // read in user data from cmd line
+    vector<int> input(9);
+    (string(argv[1]) == "quick") ? input[0] = 0 : input[0] = 1;
+    for (int i = 2; i < argc - 2; i++) {
+        if (string(argv[i]) == "NULL") // if the user leaves a category blank, use INT_MAX as a flag
+            input[i - 1] = INT_MAX;
+        else
+            input[i - 1] = stoi(argv[i]);
+    }
+    (string(argv[8]) == "warmer") ? input[7] = 0 : input[7] = 1;
+    if (string(argv[9]) == "tropical")
+        input[8] = 0;
+    else if (string(argv[9]) == "mild")
+        input[8] = 1;
+    else if (string(argv[9]) == "continental")
+        input[8] = 2;
+    else if (string(argv[9]) == "polar")
+        input[8] = 3;
+    else if (string(argv[9]) == "dry")
+        input[8] = 4;
+
     vector<City> cities;
     readData(cities);
-
     cout << sort(cities, input) << endl;
 
     for (int i = 0; i < cities.size(); i++) {
-        cout << cities[i].name << "\'s rank: " << cities[i].rank << endl;
+        cout << cities[i].name << endl;
+        cout << cities[i].lat << endl;
+        cout << cities[i].lon << endl;
+        cout << cities[i].min_temp << endl;
+        cout << cities[i].max_temp << endl;
+        cout << cities[i].min_rain << endl;
+        cout << cities[i].max_rain << endl;
+        cout << cities[i].min_humid << endl;
+        cout << cities[i].max_humid << endl;
+        cout << cities[i].temp_trend << endl;
+        cout << cities[i].climate << endl;
+        cout << i + 1 << endl; // relative rank
     }
 
     return 0;
@@ -57,11 +92,13 @@ void quickSort(vector<City>& cities, int first, int last) {
     }
 }
 
+// has a fatal bug where duplicate values get the program caught in an infinite loop
+// current workaround is to delete duplicate values before calling quicksort altogether
 int partition(vector<City>& cities, int first, int last) {
     int pivot = first;
     int up = first;
     int down = last;
-    while (up < down) { // TODO: CAN'T HANDLE DUPLICATE VALUES
+    while (up < down) {
         while (cities[up].rank < cities[pivot].rank) up++;
         while (cities[down].rank > cities[pivot].rank) down--;
         if (cities[up].rank > cities[down].rank) {
@@ -78,16 +115,44 @@ void swap(City& x, City& y) {
     y = temp;
 }
 
+// used as a workaround to the quicksort duplicate bug
+void removeDuplicates(vector<City>& cities) {
+    unordered_set<int> values;
+    vector<City> newCities;
+    for (int i = 0; i < cities.size(); i++) {
+        if (values.count(cities[i].rank) == 0) {
+            newCities.push_back(cities[i]);
+            values.insert(cities[i].rank);
+        }
+    }
+    cities = newCities;
+}
+
 // radix/counting sort pseudocode/algorithm idea from https://www.programiz.com/dsa/radix-sort
 // and https://www.interviewkickstart.com/learn/radix-sort-algorithm
-// params "extra1" and "extra2" are extraneous vars so that I can use function pointers in sort
+// params "extra1" and "extra2" are extraneous vars so that I can use function pointers in the "sort" method
 void radixSort(vector<City>& cities, int extra1, int extra2) {
-    vector<vector<int>> buckets(3, vector<int>(10, 0));
+    int places = maxNumOfPlaces(cities);
 
-    // call counting sort for each digit (ones, tens, hundreds places)
-    for (int i = 0; i < 3; i++) {
+    vector<vector<int> > buckets(places, vector<int>(10, 0));
+
+    // call counting sort for each digit
+    for (int i = 0; i < places; i++) {
         countingSort(cities, buckets[i], i);
     }
+}
+
+int maxNumOfPlaces(vector<City>& cities) {
+    int max = 0;
+    for (int i = 0; i < cities.size(); i++) {
+        if (max < cities[i].rank) max = cities[i].rank;
+    }
+    int numOfPlaces = 0;
+    while (max != 0) {
+        numOfPlaces++;
+        max /= 10;
+    }
+    return numOfPlaces;
 }
 
 void countingSort(vector<City>& cities, vector<int>& buckets, int place) {
@@ -120,7 +185,7 @@ void generateData() {
     unordered_set<string> generated;
 
     ofstream data("data.csv");
-    const int num_strings = 10;
+    const int num_strings = 20000;
     int i = 0;
     data << "City,Lat,Long,Min_Temp,Max_Temp,Min_Rain,Max_Rain,Min_Humid,Max_Humid,Temp_Trend,Climate" << endl;
     while (i < num_strings) {
@@ -132,8 +197,9 @@ void generateData() {
         uniform_int_distribution<> char_dist('a', 'z');
         string prefix;
         for (int j = 0; j < prefix_len; j++) {
-            prefix += static_cast<char>(char_dist(gen));
+            prefix += static_cast<char>(char_dist(gen)); // TODO: MAKE THESE NAMES NICER
         }
+
         string str = prefix + ending;
         str[0] = toupper(str[0]);
 
@@ -147,17 +213,17 @@ void generateData() {
         int lon = lon_range(gen);
 
         // generate min/max temp, rainfall, humidity
-        uniform_int_distribution<> min_temp_range(0, 80);
+        uniform_int_distribution<> min_temp_range(0, 85);
         int min_temp = min_temp_range(gen);
-        uniform_int_distribution<> max_temp_range(min_temp + 5, min_temp + 30);
+        uniform_int_distribution<> max_temp_range(min_temp + 2, min_temp + 35);
         int max_temp = max_temp_range(gen);
-        uniform_int_distribution<> min_rain_range(0, 50); // TODO: WHAT'S REASONABLE PRECIPITATION?
+        uniform_int_distribution<> min_rain_range(0, 30);
         int min_rain = min_rain_range(gen);
-        uniform_int_distribution<> max_rain_range(min_rain + 5, min_rain + 20);
+        uniform_int_distribution<> max_rain_range(min_rain + 2, min_rain + 25);
         int max_rain = max_rain_range(gen);
         uniform_int_distribution<> min_humid_range(0, 55);
         int min_humid = min_humid_range(gen);
-        uniform_int_distribution<> max_humid_range(min_humid + 5, 100);
+        uniform_int_distribution<> max_humid_range(min_humid + 2, 100);
         int max_humid = max_humid_range(gen);
 
         // generate trend/climate information
@@ -247,6 +313,12 @@ int getMinHumid(vector<City>& cities, int i) {
 int getMaxHumid(vector<City>& cities, int i) {
     return cities[i].max_humid;
 }
+int getTempTrend(vector<City>& cities, int i) {
+    return cities[i].temp_trend;
+}
+int getClimate(vector<City>& cities, int i) {
+    return cities[i].climate;
+}
 
 void setRanks(vector<City>& cities, vector<int>& input) {
     int(*categories[6])(vector<City>&, int);
@@ -257,30 +329,65 @@ void setRanks(vector<City>& cities, vector<int>& input) {
     categories[4] = getMinHumid;
     categories[5] = getMaxHumid;
 
-    // TODO: ADD FUNCTIONALITY IN CASE USER INPUT NOTHING FOR THAT CATEGORY?
-    for (int i = 0; i < cities.size(); i++) {
-        // add the city's rank for each category to its total rank
-        // (where rank is |difference between the user input value and the city's actual value|)
-        for (int j = 0; j < 6; j++) {
-            cities[i].rank += abs(categories[j](cities, i) - input[j]);
+    for (int i = 1; i < 7; i++) {
+        // if user did not input anything for a category, disregard it from the ranking
+        if (input[i] == INT_MAX) continue;
+
+        for (int j = 0; j < cities.size(); j++) {
+            // add the city's rank for each category to its total rank
+            // (where rank is |difference between the user input value and the city's actual value|)
+            cities[j].rank += abs(categories[i - 1](cities, j) - input[i]);
         }
     }
 }
 
 // use of chrono library derived from https://www.geeksforgeeks.org/chrono-in-c/#
 double sort(vector<City>& cities, vector<int>& input) {
-    void(*sorts[2])(vector<City>&, int, int);
+    void (*sorts[2])(vector<City> &, int, int);
     sorts[0] = quickSort;
     sorts[1] = radixSort;
+
+    setRanks(cities, input);
+    if (input[0] == 0) removeDuplicates(cities); // remove duplicates to avoid quicksort bug
 
     chrono::time_point<chrono::system_clock> start, end;
     start = chrono::system_clock::now();
 
-    setRanks(cities, input);
-    sorts[1](cities, 0, (int) cities.size() - 1); // calls quick or radix based on user input
+    sorts[input[0]](cities, 0, (int) cities.size() - 1); // calls quick or radix based on user input
 
     end = chrono::system_clock::now();
     chrono::duration<double> elapsed = end - start;
 
+    // filter by temperature trend and climate (bring user preference to top of list)
+    for (int i = 0; i < 2; i++) {
+        if (input[7 + i] == INT_MAX) continue;
+        filterByCat(cities, input[7 + i], i);
+    }
+
     return elapsed.count();
+}
+
+void filterByCat(vector<City>& cities, int input, int cat) {
+    int(*categories[2])(vector<City>&, int);
+    categories[0] = getTempTrend;
+    categories[1] = getClimate;
+
+    vector<City> inputMatch, noMatch;
+    int size = (int) cities.size();
+
+    // split cities into a list of cities which match the user input and a list of cities that don't
+    for (int i = 0; i < size; i++) {
+        if (categories[cat](cities, i) == input)
+            inputMatch.push_back(cities[i]);
+        else
+            noMatch.push_back(cities[i]);
+    }
+
+    // merge lists together
+    for (int i = 0; i < cities.size(); i++) {
+        if (i < inputMatch.size())
+            cities[i] = inputMatch[i];
+        else
+            cities[i] = noMatch[i - inputMatch.size()];
+    }
 }
