@@ -1,0 +1,112 @@
+/*
+This is for anything to do with inputs.
+*/
+
+.label {
+      font-weight: 600;
+      font-size: 15px;
+}
+
+.desc {
+      font-size: 12px;
+      color: gray;
+      width: 375px;
+}
+
+.inputContainer {
+      display: flex;
+      flex-direction: column;
+      row-gap: calc(3*var(--spacing));
+}
+
+.input {
+      margin-left: calc(5*var(--spacing));
+      border-left: 1px solid #154091ac;
+      padding: 15px;
+      background: #cbcbcfa3;
+      box-shadow: -3px 5px 12px 0px #b1adad57;
+}
+
+.numberInput {
+      margin-bottom: calc(3*var(--spacing));
+}
+
+.numberInput > span {
+      font-size: 13px;
+      font-weight: 600;
+      margin-right: var(--spacing);
+      display: block;
+}
+
+.numberInput > input {
+      font-size: 11px;
+      border: 1px solid #8080803d;
+      box-shadow: 0px 1px 3px #455d8726;
+      padding: var(--spacing);
+      outline: none;
+      background: #efefef;
+}
+
+.numberInput:last-child {
+      margin-bottom: 0px;
+}
+
+.buttonContainer {
+      display: flex;
+      background: #1c5cbc;
+      width: fit-content;
+      box-shadow: 0px 2px 8px #1540912a;
+      margin-bottom: calc(3*var(--spacing));
+}
+
+.buttonContainer.trending {
+      margin-bottom: 0;
+}
+
+.buttonContainer > .button {
+      padding: calc(2*var(--spacing));
+      font-size: 13px;
+      color: white;
+}
+
+button.submit {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      color: white;
+      font-size: 20px;
+      font-weight: 600;
+      border: none;
+      padding: calc(2*var(--spacing));
+      margin: calc(4*var(--spacing)) 0 0 0;
+}
+
+.buttonContainer > .button:hover {
+      cursor: pointer;
+      transition: 0.25s;
+}
+
+.submit:hover {
+      background: #243485;
+      cursor: pointer;
+      transition: 0.25s;
+}
+
+.selected {
+      background: #2c2b6ad8 !important;
+}
+
+.top{
+
+}
+
+#about-button{
+      border: none;
+      color: white;
+      background-color: #474e5d;
+      cursor: pointer;
+      padding: 15px 32px;
+      text-align: center;
+      font-size: 10px;
+      display:inline-flex;
+}

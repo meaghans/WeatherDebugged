@@ -1,0 +1,104 @@
+/* 
+This is for anything to do with the results bing bong badda bing badda boom
+*/
+
+#result {
+      padding-right: calc(30*var(--spacing));
+}
+
+#result > .title {
+      margin-bottom: calc(5*var(--spacing));
+}
+
+#result > .title > h1 {
+      font-size: 27px;
+      color: var(--blue);
+}
+
+#result > .title > span {
+      display: block;
+      width: 375px;
+      font-size: 12px;
+      color: gray;
+      font-weight: 400;
+}
+
+#result > .title > .timing {
+      color: rgba(128, 128, 128, 0.764);
+}
+
+.infoContainer {
+      display: flex;
+      flex-direction: column;
+      row-gap: calc(10*var(--spacing));
+      margin-bottom: calc(10*var(--spacing));
+}
+
+.infoBox {
+      background: rgb(243 243 243);
+      padding: calc(3*var(--spacing));
+      box-shadow: -3px 5px 12px 0px #b1adad57;
+      border-right: 1px solid var(--blue);
+}
+
+.infoBox > h2 {
+      font-size: 18px;
+}
+
+.infoBox > span {
+      font-size: 12px;
+      color: var(--blue);
+      margin-bottom: var(--spacing);
+      display: block;
+}
+
+.infoBox > p {
+      font-size: 13px;
+      display: flex;
+      justify-content: space-between;
+      color: gray;
+}
+
+.infoBox > p > .category {
+      color: gray;
+      margin-right: 4px;
+}
+
+.jump {
+      display: flex;
+      justify-content: left;
+      align-items: center;
+}
+
+.jump > span {
+      display: inline;
+      color: gray;
+      margin: 0;
+      font-size: 12px;
+}
+
+.jump > .obscured {
+      color: var(--lightGray);
+}
+
+.jump > input {
+      color: gray;
+      margin: 0 5px;
+      width: 75px;
+      font-size: 12px;
+}
+
+.jump > svg {
+      margin-left: 10px;
+      color: var(--lightGray);
+}
+
+.jump > svg:hover {
+      cursor: pointer;
+      color: #154091ac;
+      transition: 0.2s;
+}
+
+extraneous {
+      display: none;
+}

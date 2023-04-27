@@ -1,0 +1,286 @@
+<html>
+<head>
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/input.css">
+    <link rel="stylesheet" href="..css/main.css">
+    <link rel="stylesheet" href="../css/map.css">
+    <link rel="stylesheet" href="..css/result.css">
+    <link rel="stylesheet" href="..css/search.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Scripts + jQuery -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script src="../static/scripts/Map.js" type="text/javascript"></script>
+    <script src="../static/scripts/interaction.js" type="text/javascript"></script>
+    <script src="../static/scripts/City.js" type="text/javascript"></script>
+
+    <!-- Other -->
+    <title>Climate</title>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+<nav>
+    <div id="groupName">
+        <span>The System Breakers &#129323</span>
+    </div>
+    <div id="memberNames">
+        <span>Meaghan Estrada</span>
+        <span>Evelyn Meckley</span>
+        <span>Lysandra Belnavis-Walters</span>
+    </div>
+</nav>
+<header>
+    <h1><span>Weather </span>Debugged</h1>
+    <span>Climate change is a horrible consequence of our negligence. Fortunately, you can ignore that minor problem today and find a great location tomorrow!</span>
+</header>
+<section id="main">
+    <div id="left">
+        <div id="result">
+            <div class="infoContainer"></div>
+            <div class="jump numberInput">
+                <span>Go to Page</span>
+                <input id="pageNumber" type="number" value="1">
+                <span class="obscured"></span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-right-fill goTo" viewBox="0 0 16 16">
+                    <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+    <div id="right">
+        <div id="map">
+            <img src="../static/images/map.png">
+        </div>
+        <div id="yellowManContainer"></div>
+    </div>
+</section>
+</body>
+<!--For reading from program and outputting said data to page-->
+<!--{{data}}-->
+<!--The data you're seeing below is just example data-->
+<extraneous>
+    Radix
+    10
+    Boston
+    10
+    20
+    30
+    43
+    50
+    32
+    70
+    80
+    29
+    Rainforest
+    1
+    Houston
+    180
+    290
+    86
+    90
+    50
+    60
+    23
+    80
+    77
+    Desert
+    2
+    Berlin
+    109
+    50
+    66
+    40
+    50
+    60
+    70
+    80
+    -10
+    Tundra
+    3
+    Kissimmee
+    109
+    50
+    80
+    90
+    11
+    15
+    70
+    80
+    10
+    Swamp
+    4
+    Alcatraz
+    109
+    50
+    66
+    40
+    50
+    60
+    70
+    80
+    10
+    Tropical
+    5
+    Paris
+    75.213
+    22.908
+    88.450
+    39.776
+    9.321
+    45.667
+    95.234
+    51.002
+    67.789
+    Temperate
+    6
+    Montreal
+    75.123
+    11.329
+    38.904
+    80.567
+    92.761
+    22.018
+    59.882
+    46.229
+    68.115
+    Ponder
+    7
+    Ljubljana
+    47.269
+    22.678
+    88.901
+    5.123
+    61.775
+    14.821
+    39.512
+    92.047
+    73.119
+    Serendipity
+    8
+    Osaka
+    8.756
+    45.321
+    69.028
+    23.004
+    51.679
+    97.204
+    2.916
+    76.835
+    31.558
+    Effervescent
+    9
+    Boston
+    10
+    20
+    30
+    43
+    50
+    32
+    70
+    80
+    29
+    Rainforest
+    10
+    Houston
+    180
+    290
+    86
+    90
+    50
+    60
+    23
+    80
+    77
+    Desert
+    11
+    Berlin
+    109
+    50
+    66
+    40
+    50
+    60
+    70
+    80
+    -10
+    Tundra
+    12
+    Kissimmee
+    109
+    50
+    80
+    90
+    11
+    15
+    70
+    80
+    10
+    Swamp
+    13
+    Alcatraz
+    109
+    50
+    66
+    40
+    50
+    60
+    70
+    80
+    10
+    Tropical
+    14
+    Paris
+    75.213
+    22.908
+    88.450
+    39.776
+    9.321
+    45.667
+    95.234
+    51.002
+    67.789
+    Temperate
+    15
+    Montreal
+    75.123
+    11.329
+    38.904
+    80.567
+    92.761
+    22.018
+    59.882
+    46.229
+    68.115
+    Ponder
+    16
+    Ljubljana
+    47.269
+    22.678
+    88.901
+    5.123
+    61.775
+    14.821
+    39.512
+    92.047
+    20.256
+    Serendipity
+    17
+    Osaka
+    8.756
+    45.321
+    69.028
+    23.004
+    51.679
+    97.204
+    2.916
+    76.835
+    31.558
+    Effervescent
+    18
+</extraneous>
+</html>
+

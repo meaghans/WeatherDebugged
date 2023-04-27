@@ -1,0 +1,30 @@
+/* 
+This is for the search aspect of the site (left-hand side). 
+*/
+
+#search {
+      padding-right: calc(30*var(--spacing));
+}
+
+#search > .title {
+      margin-bottom: calc(5*var(--spacing));
+}
+
+#search > .title > h1 {
+      font-size: 27px;
+      color: #1c5cbc;
+}
+
+#search > .title > span {
+      display: block;
+      width: 375px;
+      font-size: 12px;
+      color: gray;
+      font-weight: 400;
+}
+
+#search > form {
+      display: flex;
+      flex-direction: column;
+      row-gap: calc(5*var(--spacing));
+}
