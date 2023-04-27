@@ -19,7 +19,6 @@ void countingSort(vector<City>& cities, vector<int>& buckets, int place);
 int maxNumOfPlaces(vector<City>& cities);
 int getDigit(int num, int place);
 
-void generateData();
 void readData(vector<City>& cities);
 
 int getMinTemp(vector<City>& cities, int i);
@@ -174,95 +173,6 @@ void countingSort(vector<City>& cities, vector<int>& buckets, int place) {
 
 int getDigit(int num, int place) {
     return (num / (int) pow(10, place)) % 10;
-}
-
-void generateData() {
-    // basics of random generation from chatgpt
-    const std::string endings[] = {"ville", "town", "berg", "polis", " City"};
-    vector<string> c = {"b", "c", "d", "f", "g", "h", "j",
-                        "k", "l", "m", "n", "p", "r",
-                        "s", "t", "w", "y"};
-    vector<string> v = {"a", "e", "i", "o", "u"};
-    vector<string> d = {"st", "sh", "sp", "sm", "ph", "ch", "th", "qu", "gh"};
-    vector<string> p = {"oa", "oo", "ee", "ou", "ea", "ai", "oi", "ie"};
-    vector<string> patterns = {"cvcvc", "cpc", "cp", "cpcvc", "vdv", "vdvc",
-                               "cvd", "cvdvc", "dpc", "dp", "cpd", "dvd"};
-    const int num_endings = sizeof(endings) / sizeof(endings[0]);
-    random_device rd;
-    mt19937 gen(rd());
-    uniform_int_distribution<> len_dist(6, 13);
-    uniform_int_distribution<> ending_dist(0, num_endings - 1);
-    unordered_set<string> generated;
-
-    ofstream data("data.csv");
-    const int num_strings = 100000;
-    int i = 0;
-    data << "City,Lat,Long,Min_Temp,Max_Temp,Min_Rain,Max_Rain,Min_Humid,Max_Humid,Temp_Trend,Climate" << endl;
-    while (i < num_strings) {
-        // generate a unique name
-        int ending_index = ending_dist(gen);
-        string ending = endings[ending_index];
-        string prefix;
-
-        uniform_int_distribution<> pattern_dist(0, (int) patterns.size() - 1);
-        uniform_int_distribution<> consonant_dist(0, (int) c.size() - 1);
-        uniform_int_distribution<> vowel_dist(0, (int) v.size() - 1);
-        uniform_int_distribution<> cons_digraph_dist(0, (int) d.size() - 1);
-        uniform_int_distribution<> vow_digraph_dist(0, (int) p.size() - 1);
-
-        string pattern = patterns[pattern_dist(gen)];
-        for (int j = 0; j < pattern.length(); j++) {
-            if (pattern[j] == 'c')
-                prefix += c[consonant_dist(gen)];
-            else if (pattern[j] == 'v')
-                prefix += v[vowel_dist(gen)];
-            else if (pattern[j] == 'd')
-                prefix += d[cons_digraph_dist(gen)];
-            else
-                prefix += p[vow_digraph_dist(gen)];
-        }
-
-        string str = prefix + ending;
-        
-        // regenerate a name if we have a duplicate
-        if (generated.count(str) == 1) continue;
-
-        str[0] = toupper(str[0]);
-
-        // generate lat/long
-        uniform_int_distribution<> lat_range(0, 100); // TODO: ASK LYSANDRA REASONABLE COORDS FOR HER MAP
-        int lat = lat_range(gen);
-        uniform_int_distribution<> lon_range(0, 100);
-        int lon = lon_range(gen);
-
-        // generate min/max temp, rainfall, humidity
-        uniform_int_distribution<> min_temp_range(0, 85);
-        int min_temp = min_temp_range(gen);
-        uniform_int_distribution<> max_temp_range(min_temp + 2, min_temp + 35);
-        int max_temp = max_temp_range(gen);
-        uniform_int_distribution<> min_rain_range(0, 30);
-        int min_rain = min_rain_range(gen);
-        uniform_int_distribution<> max_rain_range(min_rain + 2, min_rain + 25);
-        int max_rain = max_rain_range(gen);
-        uniform_int_distribution<> min_humid_range(0, 55);
-        int min_humid = min_humid_range(gen);
-        uniform_int_distribution<> max_humid_range(min_humid + 2, 100);
-        int max_humid = max_humid_range(gen);
-
-        // generate trend/climate information
-        uniform_int_distribution<> temp_trend_range(0, 1);
-        int temp_trend = temp_trend_range(gen);
-        uniform_int_distribution<> climate_range(0, 4);
-        int climate = climate_range(gen);
-
-        data << str << "," << lat << "," << lon << "," <<
-             min_temp << "," << max_temp << "," << min_rain << "," <<
-             max_rain << "," << min_humid << "," << max_humid << "," <<
-             temp_trend << "," << climate << endl;
-        generated.insert(str);
-        i++;
-    }
-    data.close();
 }
 
 void readData(vector<City>& cities) {
