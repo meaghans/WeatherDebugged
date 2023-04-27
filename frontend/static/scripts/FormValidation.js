@@ -19,7 +19,7 @@ function fill(element, name) {
             "rainfallMin": "NULL",
             "tempTrend": "NULL",
             "climateType": "NULL",
-            "sortMethod": "NULL"
+            "sortMethod": "quick"
       }
       element.val(defaultValues[name]);
 }
