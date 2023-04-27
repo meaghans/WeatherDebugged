@@ -176,7 +176,16 @@ int getDigit(int num, int place) {
 }
 
 void generateData() {
+    // basics of random generation from chatgpt
     const std::string endings[] = {"ville", "town", "berg", "polis", " City"};
+    vector<string> c = {"b", "c", "d", "f", "g", "h", "j",
+                        "k", "l", "m", "n", "p", "r",
+                        "s", "t", "w", "y"};
+    vector<string> v = {"a", "e", "i", "o", "u"};
+    vector<string> d = {"st", "sh", "sp", "sm", "ph", "ch", "th", "qu", "gh"};
+    vector<string> p = {"oa", "oo", "ee", "ou", "ea", "ai", "oi", "ie"};
+    vector<string> patterns = {"cvcvc", "cpc", "cp", "cpcvc", "vdv", "vdvc",
+                               "cvd", "cvdvc", "dpc", "dp", "cpd", "dvd"};
     const int num_endings = sizeof(endings) / sizeof(endings[0]);
     random_device rd;
     mt19937 gen(rd());
@@ -185,26 +194,39 @@ void generateData() {
     unordered_set<string> generated;
 
     ofstream data("data.csv");
-    const int num_strings = 20000;
+    const int num_strings = 100000;
     int i = 0;
     data << "City,Lat,Long,Min_Temp,Max_Temp,Min_Rain,Max_Rain,Min_Humid,Max_Humid,Temp_Trend,Climate" << endl;
     while (i < num_strings) {
-        // generate city name (code from chatgpt)
-        int len = len_dist(gen);
+        // generate a unique name
         int ending_index = ending_dist(gen);
         string ending = endings[ending_index];
-        int prefix_len = len - ending.length();
-        uniform_int_distribution<> char_dist('a', 'z');
         string prefix;
-        for (int j = 0; j < prefix_len; j++) {
-            prefix += static_cast<char>(char_dist(gen)); // TODO: MAKE THESE NAMES NICER
+
+        uniform_int_distribution<> pattern_dist(0, (int) patterns.size() - 1);
+        uniform_int_distribution<> consonant_dist(0, (int) c.size() - 1);
+        uniform_int_distribution<> vowel_dist(0, (int) v.size() - 1);
+        uniform_int_distribution<> cons_digraph_dist(0, (int) d.size() - 1);
+        uniform_int_distribution<> vow_digraph_dist(0, (int) p.size() - 1);
+
+        string pattern = patterns[pattern_dist(gen)];
+        for (int j = 0; j < pattern.length(); j++) {
+            if (pattern[j] == 'c')
+                prefix += c[consonant_dist(gen)];
+            else if (pattern[j] == 'v')
+                prefix += v[vowel_dist(gen)];
+            else if (pattern[j] == 'd')
+                prefix += d[cons_digraph_dist(gen)];
+            else
+                prefix += p[vow_digraph_dist(gen)];
         }
 
         string str = prefix + ending;
-        str[0] = toupper(str[0]);
-
+        
         // regenerate a name if we have a duplicate
         if (generated.count(str) == 1) continue;
+
+        str[0] = toupper(str[0]);
 
         // generate lat/long
         uniform_int_distribution<> lat_range(0, 100); // TODO: ASK LYSANDRA REASONABLE COORDS FOR HER MAP
