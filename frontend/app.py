@@ -11,9 +11,8 @@ def index():
 def getInformation():
     data = request.form
     arguments = ["./program.exe"] + cmd_line_arguments(data).split(" ")
-    print(arguments)
     result = subprocess.run(arguments, capture_output=True, text=True)
-    return render_template("climateResult.html", data = result.stdout)
+    return render_template("climateResult.html", sort = data["sortMethod"], data = result.stdout)
 
 def cmd_line_arguments(data):
     arg = ""
