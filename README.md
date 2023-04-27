@@ -1,6 +1,8 @@
 # weatherdebugged
 ✧.* dsa project 3 by *the system breakers* :-) ✧.*
 
+col: [@emeckley](https://github.com/emeckley) and [@LysandraBW](https://github.com/LysandraBW)
+
 `·˚ ༘₊· ͟͟͞͞꒰➳ ABOUT OUR PROJECT:`
 
 `Problem:` With the changing climate, finding an area with weather patterns well-suited to a person can be a challenge. We want to design a program that suggests areas for users to live based on their preferred climate and displays those suggestions in an intuitive, easily understood manner.
