@@ -16,3 +16,6 @@ col: [@emeckley](https://github.com/emeckley) and [@LysandraBW](https://github.c
 `Tools:` We used C++ for the back-end work (storing and sorting the data). For the front-end, we used Flask (written in Python) as a “micro web framework”. Furthermore, we also used HTML, CSS, JavaScript, and a library called jQuery. 
 
 `Algorithms Implemented:` We implemented Quicksort and Radix Sort using vectors of City objects (City being a simple struct which had all the data members described in the “Data” section).
+
+`ꕥ FUTURE OPTIMIZATION:`
+[text]
