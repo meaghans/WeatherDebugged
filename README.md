@@ -18,4 +18,5 @@ col: [@emeckley](https://github.com/emeckley) and [@LysandraBW](https://github.c
 `Algorithms Implemented:` We implemented Quicksort and Radix Sort using vectors of City objects (City being a simple struct which had all the data members described in the “Data” section).
 
 `ꕥ FUTURE OPTIMIZATION:`
+<br>
 [text]
