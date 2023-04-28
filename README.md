@@ -19,7 +19,6 @@ col: [@emeckley](https://github.com/emeckley) and [@LysandraBW](https://github.c
 
 `ꕥ FUTURE OPTIMIZATION:`
 <br>
-There is a bug somewhere in the program that causes the men to glitch and line up at the top of the page. I'm not exactly sure where this is coming from, but it seems to happen when the "hot" or "warm" temperatures are selected. As you can see this bug comes and goes.
-![image](https://user-images.githubusercontent.com/81883243/235051249-f6bd32bd-71e7-43b7-8f61-2a95ebd1bc8e.png)
+In the future, we'd like to focus on lining up our yellow-men more accurately according to our data and communication with the back-end files. Attached is an image which was also clearly seen in our presentation, so we've decided to add this as one of our future goals for the project. 
 
-[text]
+![image](https://user-images.githubusercontent.com/81883243/235051249-f6bd32bd-71e7-43b7-8f61-2a95ebd1bc8e.png)
